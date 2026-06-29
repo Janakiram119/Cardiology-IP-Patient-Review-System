@@ -694,9 +694,9 @@ with tab3:
     dfilt = dfall[dfall["_d"].apply(lambda x: x is not None and date_from <= x <= date_to)].copy()
 
     total   = len(dfilt)
-    stable  = len(dfilt[dfilt["status1"]=="Stable"])
-    unstable= len(dfilt[dfilt["status1"]=="Unstable"])
-    red_t   = len(dfilt[dfilt["triage"]=="Red"])
+    stable   = int(dfilt["status1"].eq("Stable").sum())   if not dfilt.empty and "status1" in dfilt.columns else 0
+    unstable = int(dfilt["status1"].eq("Unstable").sum()) if not dfilt.empty and "status1" in dfilt.columns else 0
+    red_t    = int(dfilt["triage"].eq("Red").sum())       if not dfilt.empty and "triage"  in dfilt.columns else 0
 
     # ── KPI Cards ────────────────────────────────────────────
     krow = st.columns([1,1,1,1,1.2])
